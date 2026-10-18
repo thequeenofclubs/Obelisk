@@ -1,5 +1,5 @@
 ## Architect DSP: A Deep Dive
-Architect is my codename for the DSP that powers Ragnarock. It's why Ragnarock is able to produce the sound quality and volume that it does.
+Architect is my codename for the DSP that powers Obelisk. It's why the speaker is able to produce the sound quality and volume that it does.
 
 ## Main Goal
 Architect was designed to embarass commercially available fixed DSP, by employing a mixture of simple and intuitive techniques with bleeding edge technology. I didn't want to settle for anything I considered anything less than perfect, so I did it myself. 
@@ -39,7 +39,7 @@ Architect takes this discrepancy into account, dynamically applying boost to the
 
 ## Adaptive Crossover
 This is something you will never notice, but it's an important feature of Architect.
-Since Ragnarock has two channels, a LF channel (bass) and an HF channel (treble), we must determine where to divide the signal. As I mentioned before, this point is known as the crossover frequency. Frequencies above it are sent to the HF channel and frequencies below it are sent to the LF channel.
+Since Obelisk has two channels, a LF channel (bass) and an HF channel (treble), we must determine where to divide the signal. As I mentioned before, this point is known as the crossover frequency. Frequencies above it are sent to the HF channel and frequencies below it are sent to the LF channel.
 The problem lies in driver capability. The large W6 driver is great at playing bass, but terrible at playing treble. The inverse goes for the dual tweeters. They are great for treble but horrible for bass. They're simply built for different purposes.
 Therefore, we must distribute the sound such that the drivers play only what they can handle. As with all things, this ability is dependent on the output level.
 The 2 inch tweeters can play deep bass, but only very quietly before they exceed their physical capabilities. 
@@ -50,7 +50,7 @@ When volume rises, the crossover slowly shifts upward, offloading more and more 
 At its highest, the subwoofer plays up to 1500hz, roughly equivalent to the ringing of a glass.
 
 ## Bass Remapping
-The subwoofer in Ragnarock can play very deep in the frequency range, down to around 28hz before output collapses and power requirement skyrockets. To get around this limitation, I developed a technique in which Architect can use a modified PWM signal to trick your brain into hearing lower tones, without overstressing the driver. 
+The subwoofers in Obelisk can play very deep in the frequency range, down to around 28hz before output collapses and power requirement skyrockets. To get around this limitation, I developed a technique in which Architect can use a modified PWM signal to trick your brain into hearing lower tones, without overstressing the driver. 
 
 Instead of playing the tone directly, I choose a deep tone (often around 30hz) and modulate the volume of this tone to match the initial tone. In effect, the 30hz tone's amplitude is directly linked to the frequency of the incoming signal. As an example, let's take a 5hz tone being inputted into Architect. Insted of sending 5hz to the driver, which would instantly destroy it, Architect plays 30hz but turns it on/off at 5hz. The input signal rides on the 30hz carrier frequency.
 
@@ -84,7 +84,7 @@ ValOS Hosts a WebUI which allows for modification of parameters, tweaking tuning
 ValOS supports remote access via the WebUI, via VNC for graphical desktop tasks, or via SSH for quick fixes.
 This allows for toggling between tuning profiles, adjusting tuning without reboots, and allows for per-input tuning profiles.
 
-Additionally, ValOS handles the bluetooth and AirPlay servers, which allow Ragnarock to be wirelessly connectable.
+Additionally, ValOS handles the bluetooth and AirPlay servers, which allow Obelisk to be wirelessly connectable.
 
 ### Internal Linking
 It interacts with the Architect software itself via a shared memory architecture. Memory is shared between the two, for low-latency, high-speed communication. ValOS places the audio samples from Bluetooth or AirPlay directly into a fixed location, summing them if a signal is present from both sources. Architect then copies that audio, on a sample-by-sample basis directly into a register for processing. Once complete, that sample is stored in the memory address which the DAC uses. 
